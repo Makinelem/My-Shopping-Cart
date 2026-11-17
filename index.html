@@ -42,3 +42,1461 @@
     .auth-screen {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 360px;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .auth-header h1 {
+      font-size: 20px;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+    }
+
+    .auth-header p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      height: 38px;
+      padding: 0 10px;
+      font-size: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #f8fafc;
+      color: var(--text);
+      line-height: 20px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #ffffff;
+    }
+
+    .btn {
+      width: 100%;
+      height: 40px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn:active {
+      opacity: 0.85;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      margin-top: 6px;
+    }
+
+    .btn-link {
+      background: none;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 10px;
+      height: auto;
+      padding: 6px;
+      text-decoration: underline;
+    }
+
+    .error-text {
+      color: var(--danger);
+      font-size: 12px;
+      text-align: center;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    /* ================= MODAIS ================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 2000;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 380px;
+      max-height: 85vh;
+      overflow-y: auto;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .modal-header h3 {
+      font-size: 16px;
+      color: var(--primary-dark);
+    }
+
+    .btn-close-modal {
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      line-height: 20px;
+    }
+
+    .modal-box p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    /* Área de Salvar & Listar Listas */
+    .save-list-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .save-list-row input {
+      height: 36px;
+      font-size: 14px;
+    }
+
+    .btn-save-list {
+      width: auto;
+      height: 36px;
+      padding: 0 12px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .btn-new-blank {
+      width: 100%;
+      height: 34px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: 1px dashed var(--primary);
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .saved-lists-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .saved-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+
+    .saved-list-info {
+      flex: 1;
+      overflow: hidden;
+      padding-right: 8px;
+    }
+
+    .saved-list-name {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .saved-list-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .saved-list-btns {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-load-list {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-delete-saved {
+      background: #fee2e2;
+      color: var(--danger);
+      border: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ================= TELA PRINCIPAL DO APP ================= */
+    .app-screen {
+      padding-top: 46px;
+      padding-bottom: 50px;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: var(--primary-dark);
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 12px;
+      z-index: 1000;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .topbar-left {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .topbar-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 16px;
+    }
+
+    .topbar-active-list {
+      font-size: 10.5px;
+      color: #bfdbfe;
+      line-height: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-top {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-top-accent {
+      background: var(--primary);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 8px;
+    }
+
+    /* Adicionar Cômodo */
+    .add-room-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      background: var(--card);
+      padding: 6px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .add-room-bar input {
+      height: 34px;
+      font-size: 14px;
+    }
+
+    .btn-add-room {
+      width: auto;
+      height: 34px;
+      padding: 0 12px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    /* Card do Cômodo */
+    .room-card {
+      background: var(--card);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      border-left: 3px solid var(--primary);
+    }
+
+    .room-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 10px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .room-card.collapsed .room-header {
+      border-bottom: none;
+    }
+
+    .room-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow: hidden;
+    }
+
+    .room-chevron {
+      font-size: 11px;
+      color: var(--primary);
+      width: 14px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .room-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--primary-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .room-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .room-count {
+      font-size: 11px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .btn-del-room {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+
+    /* Corpo Colapsável do Cômodo */
+    .room-body {
+      display: block;
+    }
+
+    .room-card.collapsed .room-body {
+      display: none;
+    }
+
+    /* Barra de Adicionar Item dentro do Cômodo */
+    .add-item-bar {
+      display: flex;
+      gap: 4px;
+      padding: 6px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      background: #ffffff;
+    }
+
+    .add-item-bar input.item-name {
+      flex: 1;
+      height: 30px;
+      font-size: 14px;
+      padding: 0 8px;
+    }
+
+    .add-item-bar input.item-qty {
+      width: 64px;
+      height: 30px;
+      font-size: 14px;
+      padding: 0 6px;
+      text-align: center;
+    }
+
+    .btn-add-item {
+      width: 32px;
+      height: 30px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Lista de Produtos */
+    .item-list {
+      list-style: none;
+    }
+
+    .item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 10px;
+      border-bottom: 1px solid #f1f5f9;
+      line-height: 20px;
+      min-height: 30px;
+    }
+
+    .item-row:last-child {
+      border-bottom: none;
+    }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .item-check {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .item-text {
+      font-size: 13.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-qty-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      background: var(--primary-light);
+      padding: 0 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+      flex-shrink: 0;
+    }
+
+    .item-row.checked {
+      background: #f8fafc;
+    }
+
+    .item-row.checked .item-text {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .item-row.checked .item-qty-badge {
+      background: #e2e8f0;
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .btn-del-item {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 4px;
+      margin-left: 6px;
+      line-height: 20px;
+    }
+
+    .btn-del-item:active {
+      color: var(--danger);
+    }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 20px 12px;
+    }
+
+    /* ================= RODAPÉ FIXO ================= */
+    .bottom-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: var(--primary-dark);
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 1000;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.14);
+    }
+
+    .footer-highlight {
+      color: var(--accent);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= TELA 1: LOGIN / CRIAÇÃO DE CONTA ================= -->
+  <section id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>My Shopping Cart</h1>
+        <p id="authSubtitle">Crie seu usuário e senha para começar</p>
+      </div>
+
+      <div>
+        <div class="form-group">
+          <label for="authUser">Usuário</label>
+          <input type="text" id="authUser" placeholder="Ex: joao" autocapitalize="none">
+        </div>
+
+        <div class="form-group">
+          <label for="authPass">Senha</label>
+          <input type="password" id="authPass" placeholder="Digite sua senha">
+        </div>
+
+        <button type="button" class="btn btn-primary" id="authBtnSubmit">CRIAR ACESSO</button>
+        <div id="authError" class="error-text hidden"></div>
+      </div>
+
+      <div style="text-align: center;">
+        <button type="button" id="btnOpenForgot" class="btn btn-link hidden">Esqueci a senha</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= JANELA FLUTUANTE: ESQUECI A SENHA ================= -->
+  <div id="forgotModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Recuperar Senha</h3>
+        <button type="button" id="btnCloseForgotX" class="btn-close-modal">&times;</button>
+      </div>
+      <p>Informe seu nome de usuário. Geraremos um PDF protegido (senha: maki0110) e abriremos o WhatsApp.</p>
+      <div class="form-group">
+        <input type="text" id="forgotUserInput" placeholder="Seu nome de usuário" autocapitalize="none">
+      </div>
+      <div id="forgotError" class="error-text hidden" style="margin-bottom: 8px;"></div>
+      <div class="modal-actions">
+        <button type="button" id="btnCancelForgot" class="btn btn-secondary">Cancelar</button>
+        <button type="button" id="btnSendForgot" class="btn btn-primary" style="margin-top:0;">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JANELA FLUTUANTE: SALVAR E GERENCIAR LISTAS ================= -->
+  <div id="listsModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Minhas Listas</h3>
+        <button type="button" id="btnCloseListsX" class="btn-close-modal">&times;</button>
+      </div>
+
+      <p>Salve a lista atual com um nome ou carregue uma lista salva anteriormente.</p>
+
+      <div class="save-list-row">
+        <input type="text" id="saveListNameInput" placeholder="Nome da lista (ex: Compra do Mês)">
+        <button type="button" id="btnSaveCurrentList" class="btn-save-list">Salvar</button>
+      </div>
+
+      <button type="button" id="btnNewBlankList" class="btn-new-blank">+ Iniciar Nova Lista em Branco</button>
+
+      <div id="savedListsContainer" class="saved-lists-container"></div>
+    </div>
+  </div>
+
+  <!-- ================= TELA 2: APLICATIVO PRINCIPAL ================= -->
+  <section id="appScreen" class="app-screen hidden">
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-title">My Shopping Cart</span>
+        <span class="topbar-active-list" id="activeListLabel">Lista atual (não salva)</span>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" id="btnOpenLists" class="btn-top btn-top-accent">Listas</button>
+        <button type="button" id="btnLogout" class="btn-top">Sair</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="add-room-bar">
+        <input type="text" id="newRoomInput" placeholder="Novo cômodo (ex: Itens de cozinha)">
+        <button type="button" id="btnAddRoom" class="btn-add-room">+ Cômodo</button>
+      </div>
+
+      <div id="roomsContainer"></div>
+    </main>
+
+    <footer class="bottom-footer">
+      <span>No carrinho: <span id="footerCheckedCount" class="footer-highlight">0</span> un.</span>
+      <span>Total de itens: <span id="footerTotalCount" class="footer-highlight">0</span> un.</span>
+    </footer>
+  </section>
+
+  <script>
+    (function() {
+      // Persistência Tripla
+      function readWindowState() {
+        try {
+          if (window.name && window.name.indexOf('MSC_STATE:') === 0) {
+            return JSON.parse(window.name.slice(10));
+          }
+        } catch (e) {}
+        return {};
+      }
+
+      function writeWindowState(obj) {
+        try {
+          window.name = 'MSC_STATE:' + JSON.stringify(obj);
+        } catch (e) {}
+      }
+
+      var stateCache = readWindowState();
+
+      var Storage = {
+        get: function(key) {
+          try {
+            var val = window.localStorage.getItem(key);
+            if (val !== null) return val;
+          } catch (e) {}
+
+          if (stateCache[key] !== undefined) return stateCache[key];
+
+          try {
+            var match = document.cookie.match(new RegExp('(?:^|; )' + key + '=([^;]*)'));
+            if (match) return decodeURIComponent(match[1]);
+          } catch (e) {}
+
+          return null;
+        },
+        set: function(key, val) {
+          stateCache[key] = val;
+          writeWindowState(stateCache);
+
+          try {
+            window.localStorage.setItem(key, val);
+          } catch (e) {}
+
+          try {
+            var d = new Date();
+            d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+            document.cookie = key + '=' + encodeURIComponent(val) + ';expires=' + d.toUTCString() + ';path=/';
+          } catch (e) {}
+        },
+        remove: function(key) {
+          delete stateCache[key];
+          writeWindowState(stateCache);
+
+          try {
+            window.localStorage.removeItem(key);
+          } catch (e) {}
+
+          try {
+            document.cookie = key + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+          } catch (e) {}
+        }
+      };
+
+      // Gerador de PDF Criptografado (RC4-40 PDF 1.4 Standard) 100% Nativo (Zero CDN externa)
+      function generateEncryptedPDF(username, password, docPass) {
+        function md5(bytes) {
+          function toWordArray(b) {
+            var l = b.length, n = (((l + 8) >>> 6) + 1) * 16, w = new Array(n);
+            for (var i = 0; i < n; i++) w[i] = 0;
+            for (var i = 0; i < l; i++) w[i >> 2] |= b[i] << ((i % 4) * 8);
+            w[l >> 2] |= 0x80 << ((l % 4) * 8);
+            w[n - 2] = l * 8;
+            return w;
+          }
+          function add(x, y) {
+            var l = (x & 0xFFFF) + (y & 0xFFFF), m = (x >> 16) + (y >> 16) + (l >> 16);
+            return (m << 16) | (l & 0xFFFF);
+          }
+          function rol(n, c) { return (n << c) | (n >>> (32 - c)); }
+          function cmn(q, a, b, x, s, t) { return add(rol(add(add(a, q), add(x, t)), s), b); }
+          function ff(a, b, c, d, x, s, t) { return cmn((b & c) | ((~b) & d), a, b, x, s, t); }
+          function gg(a, b, c, d, x, s, t) { return cmn((b & d) | (c & (~d)), a, b, x, s, t); }
+          function hh(a, b, c, d, x, s, t) { return cmn(b ^ c ^ d, a, b, x, s, t); }
+          function ii(a, b, c, d, x, s, t) { return cmn(c ^ (b | (~d)), a, b, x, s, t); }
+
+          var x = toWordArray(bytes), a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
+          for (var i = 0; i < x.length; i += 16) {
+            var oa = a, ob = b, oc = c, od = d;
+            a = ff(a, b, c, d, x[i], 7, -680876936); d = ff(d, a, b, c, x[i + 1], 12, -389564586);
+            c = ff(c, d, a, b, x[i + 2], 17, 606105819); b = ff(b, c, d, a, x[i + 3], 22, -1044525330);
+            a = ff(a, b, c, d, x[i + 4], 7, -176418897); d = ff(d, a, b, c, x[i + 5], 12, 1200080426);
+            c = ff(c, d, a, b, x[i + 6], 17, -1473231341); b = ff(b, c, d, a, x[i + 7], 22, -45705983);
+            a = ff(a, b, c, d, x[i + 8], 7, 1770035416); d = ff(d, a, b, c, x[i + 9], 12, -1958414417);
+            c = ff(c, d, a, b, x[i + 10], 17, -42063); b = ff(b, c, d, a, x[i + 11], 22, -1990404162);
+            a = ff(a, b, c, d, x[i + 12], 7, 1804603682); d = ff(d, a, b, c, x[i + 13], 12, -40341101);
+            c = ff(c, d, a, b, x[i + 14], 17, -1502002290); b = ff(b, c, d, a, x[i + 15], 22, 1236535329);
+
+            a = gg(a, b, c, d, x[i + 1], 5, -165796510); d = gg(d, a, b, c, x[i + 6], 9, -1069501632);
+            c = gg(c, d, a, b, x[i + 11], 14, 643717713); b = gg(b, c, d, a, x[i], 20, -373897302);
+            a = gg(a, b, c, d, x[i + 5], 5, -701558691); d = gg(d, a, b, c, x[i + 10], 9, 38016083);
+            c = gg(c, d, a, b, x[i + 15], 14, -660478335); b = gg(b, c, d, a, x[i + 4], 20, -405537848);
+            a = gg(a, b, c, d, x[i + 9], 5, 568446438); d = gg(d, a, b, c, x[i + 14], 9, -1019803690);
+            c = gg(c, d, a, b, x[i + 3], 14, -187363961); b = gg(b, c, d, a, x[i + 8], 20, 1163531501);
+            a = gg(a, b, c, d, x[i + 13], 5, -1444681467); d = gg(d, a, b, c, x[i + 2], 9, -51403784);
+            c = gg(c, d, a, b, x[i + 7], 14, 1735328473); b = gg(b, c, d, a, x[i + 12], 20, -1926607734);
+
+            a = hh(a, b, c, d, x[i + 5], 4, -378558); d = hh(d, a, b, c, x[i + 8], 11, -2022574463);
+            c = hh(c, d, a, b, x[i + 11], 16, 1839030562); b = hh(b, c, d, a, x[i + 14], 23, -35309556);
+            a = hh(a, b, c, d, x[i + 1], 4, -1530992060); d = hh(d, a, b, c, x[i + 4], 11, 1272893353);
+            c = hh(c, d, a, b, x[i + 7], 16, -155497632); b = hh(b, c, d, a, x[i + 10], 23, -1094730640);
+            a = hh(a, b, c, d, x[i + 13], 4, 681279174); d = hh(d, a, b, c, x[i], 11, -358537222);
+            c = hh(c, d, a, b, x[i + 3], 16, -722521979); b = hh(b, c, d, a, x[i + 6], 23, 76029189);
+            a = hh(a, b, c, d, x[i + 9], 4, -640364487); d = hh(d, a, b, c, x[i + 12], 11, -421815835);
+            c = hh(c, d, a, b, x[i + 15], 16, 530742520); b = hh(b, c, d, a, x[i + 2], 23, -995338651);
+
+            a = ii(a, b, c, d, x[i], 6, -198630844); d = ii(d, a, b, c, x[i + 7], 10, 1126891415);
+            c = ii(c, d, a, b, x[i + 14], 15, -1416354905); b = ii(b, c, d, a, x[i + 5], 21, -57434055);
+            a = ii(a, b, c, d, x[i + 12], 6, 1700485571); d = ii(d, a, b, c, x[i + 3], 10, -1894986606);
+            c = ii(c, d, a, b, x[i + 10], 15, -1051523); b = ii(b, c, d, a, x[i + 1], 21, -2054922799);
+            a = ii(a, b, c, d, x[i + 8], 6, 1873313359); d = ii(d, a, b, c, x[i + 15], 10, -30611744);
+            c = ii(c, d, a, b, x[i + 6], 15, -1560198380); b = ii(b, c, d, a, x[i + 13], 21, 1309151649);
+            a = ii(a, b, c, d, x[i + 4], 6, -145523070); d = ii(d, a, b, c, x[i + 11], 10, -1120210379);
+            c = ii(c, d, a, b, x[i + 2], 15, 718787259); b = ii(b, c, d, a, x[i + 9], 21, -343485551);
+
+            a = add(a, oa); b = add(b, ob); c = add(c, oc); d = add(d, od);
+          }
+          var out = [];
+          [a, b, c, d].forEach(function(w) {
+            out.push(w & 0xFF, (w >> 8) & 0xFF, (w >> 16) & 0xFF, (w >> 24) & 0xFF);
+          });
+          return out;
+        }
+
+        function rc4(key, data) {
+          var s = [], j = 0, out = [];
+          for (var i = 0; i < 256; i++) s[i] = i;
+          for (var i = 0; i < 256; i++) {
+            j = (j + s[i] + key[i % key.length]) & 0xFF;
+            var t = s[i]; s[i] = s[j]; s[j] = t;
+          }
+          var i = 0; j = 0;
+          for (var k = 0; k < data.length; k++) {
+            i = (i + 1) & 0xFF;
+            j = (j + s[i]) & 0xFF;
+            var t = s[i]; s[i] = s[j]; s[j] = t;
+            out.push(data[k] ^ s[(s[i] + s[j]) & 0xFF]);
+          }
+          return out;
+        }
+
+        var PAD = [
+          0x28,0xBF,0x4E,0x5E,0x4E,0x75,0x8A,0x41,0x64,0x00,0x4E,0x56,0xFF,0xFA,0x01,0x08,
+          0x2E,0x2E,0x00,0xB6,0xD0,0x68,0x3E,0x80,0x2F,0x0C,0xA9,0xFE,0x64,0x53,0x69,0x7A
+        ];
+
+        function padPwd(p) {
+          var b = [];
+          for (var i = 0; i < p.length && b.length < 32; i++) b.push(p.charCodeAt(i) & 0xFF);
+          var idx = 0;
+          while (b.length < 32) b.push(PAD[idx++]);
+          return b;
+        }
+
+        function toHex(bytes) {
+          return bytes.map(function(b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+        }
+
+        function strBytes(s) {
+          var a = [];
+          for (var i = 0; i < s.length; i++) a.push(s.charCodeAt(i) & 0xFF);
+          return a;
+        }
+
+        var fileId = [0x12,0x34,0x56,0x78,0x9A,0xBC,0xDE,0xF0,0x11,0x22,0x33,0x44,0x55,0x66,0x77,0x88];
+        var P = -4; // Permissões padrão
+        var pBytes = [P & 0xFF, (P >> 8) & 0xFF, (P >> 16) & 0xFF, (P >> 24) & 0xFF];
+
+        // Calcula /O (Owner) e /U (User) com a senha "maki0110"
+        var ownerHash = md5(padPwd(docPass)).slice(0, 5);
+        var O = rc4(ownerHash, padPwd(docPass));
+        var encKey = md5(padPwd(docPass).concat(O, pBytes, fileId)).slice(0, 5);
+        var U = rc4(encKey, PAD);
+
+        function encryptObjStream(objNum, genNum, dataBytes) {
+          var k = md5(encKey.concat([
+            objNum & 0xFF, (objNum >> 8) & 0xFF, (objNum >> 16) & 0xFF,
+            genNum & 0xFF, (genNum >> 8) & 0xFF
+          ])).slice(0, 10);
+          return rc4(k, dataBytes);
+        }
+
+        var safeUser = username.replace(/[()\\]/g, '');
+        var safePass = password.replace(/[()\\]/g, '');
+        var contentText =
+          'BT /F1 15 Tf 40 760 Td (My Shopping Cart - Recuperacao de Senha) Tj ' +
+          '0 -28 Td /F1 12 Tf (Usuario: ' + safeUser + ') Tj ' +
+          '0 -20 Td (Senha: ' + safePass + ') Tj ET';
+
+        var encStream = encryptObjStream(4, 0, strBytes(contentText));
+
+        var chunks = [];
+        var offsets = [0];
+        var curLen = 0;
+
+        function pushStr(s) {
+          var b = strBytes(s);
+          chunks.push(new Uint8Array(b));
+          curLen += b.length;
+        }
+
+        function pushBytes(arr) {
+          chunks.push(new Uint8Array(arr));
+          curLen += arr.length;
+        }
+
+        pushStr('%PDF-1.4\n');
+
+        offsets[1] = curLen;
+        pushStr('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+
+        offsets[2] = curLen;
+        pushStr('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
+
+        offsets[3] = curLen;
+        pushStr('3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>\nendobj\n');
+
+        offsets[4] = curLen;
+        pushStr('4 0 obj\n<< /Length ' + encStream.length + ' >>\nstream\n');
+        pushBytes(encStream);
+        pushStr('\nendstream\nendobj\n');
+
+        offsets[5] = curLen;
+        pushStr('5 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n');
+
+        offsets[6] = curLen;
+        pushStr('6 0 obj\n<< /Filter /Standard /V 1 /R 2 /O <' + toHex(O) + '> /U <' + toHex(U) + '> /P ' + P + ' >>\nendobj\n');
+
+        var xrefPos = curLen;
+        pushStr('xref\n0 7\n0000000000 65535 f \n');
+        for (var i = 1; i <= 6; i++) {
+          var off = ('0000000000' + offsets[i]).slice(-10);
+          pushStr(off + ' 00000 n \n');
+        }
+        pushStr('trailer\n<< /Size 7 /Root 1 0 R /Encrypt 6 0 R /ID [<' + toHex(fileId) + '><' + toHex(fileId) + '>] >>\nstartxref\n' + xrefPos + '\n%%EOF');
+
+        var blob = new Blob(chunks, { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'senha_' + (safeUser || 'usuario') + '.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      var KEY_USER = 'msc_user_v4';
+      var KEY_LOGGED = 'msc_logged_v4';
+      var KEY_ROOMS = 'msc_rooms_v4';
+      var KEY_SAVED_LISTS = 'msc_saved_lists_v4';
+      var KEY_ACTIVE_NAME = 'msc_active_name_v4';
+
+      var authScreen = document.getElementById('authScreen');
+      var authSubtitle = document.getElementById('authSubtitle');
+      var authUser = document.getElementById('authUser');
+      var authPass = document.getElementById('authPass');
+      var authBtnSubmit = document.getElementById('authBtnSubmit');
+      var authError = document.getElementById('authError');
+      var btnOpenForgot = document.getElementById('btnOpenForgot');
+
+      var forgotModal = document.getElementById('forgotModal');
+      var forgotUserInput = document.getElementById('forgotUserInput');
+      var forgotError = document.getElementById('forgotError');
+      var btnCloseForgotX = document.getElementById('btnCloseForgotX');
+      var btnCancelForgot = document.getElementById('btnCancelForgot');
+      var btnSendForgot = document.getElementById('btnSendForgot');
+
+      var listsModal = document.getElementById('listsModal');
+      var btnOpenLists = document.getElementById('btnOpenLists');
+      var btnCloseListsX = document.getElementById('btnCloseListsX');
+      var saveListNameInput = document.getElementById('saveListNameInput');
+      var btnSaveCurrentList = document.getElementById('btnSaveCurrentList');
+      var btnNewBlankList = document.getElementById('btnNewBlankList');
+      var savedListsContainer = document.getElementById('savedListsContainer');
+
+      var appScreen = document.getElementById('appScreen');
+      var activeListLabel = document.getElementById('activeListLabel');
+      var btnLogout = document.getElementById('btnLogout');
+      var newRoomInput = document.getElementById('newRoomInput');
+      var btnAddRoom = document.getElementById('btnAddRoom');
+      var roomsContainer = document.getElementById('roomsContainer');
+      var footerCheckedCount = document.getElementById('footerCheckedCount');
+      var footerTotalCount = document.getElementById('footerTotalCount');
+
+      var rooms = [];
+      var savedLists = [];
+      var activeListName = Storage.get(KEY_ACTIVE_NAME) || '';
+
+      try { rooms = JSON.parse(Storage.get(KEY_ROOMS)) || []; } catch (e) { rooms = []; }
+      try { savedLists = JSON.parse(Storage.get(KEY_SAVED_LISTS)) || []; } catch (e) { savedLists = []; }
+
+      function parseItemQuantity(qtyStr) {
+        if (!qtyStr) return 1;
+        var clean = String(qtyStr).replace(',', '.').trim();
+        var match = clean.match(/^(\d+(?:\.\d+)?)/);
+        if (match) {
+          var num = parseFloat(match[1]);
+          return num > 0 ? num : 1;
+        }
+        return 1;
+      }
+
+      function getSavedUser() {
+        try {
+          var raw = Storage.get(KEY_USER);
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function setupAuthView() {
+        var savedUser = getSavedUser();
+        authError.classList.add('hidden');
+
+        if (!savedUser) {
+          authSubtitle.textContent = 'Primeiro acesso: crie seu usuário e senha';
+          authBtnSubmit.textContent = 'CRIAR ACESSO';
+          btnOpenForgot.classList.add('hidden');
+        } else {
+          authSubtitle.textContent = 'Entre com seu usuário e senha';
+          authBtnSubmit.textContent = 'ENTRAR';
+          btnOpenForgot.classList.remove('hidden');
+        }
+      }
+
+      function updateActiveListHeader() {
+        activeListLabel.textContent = activeListName
+          ? 'Lista: ' + activeListName
+          : 'Lista atual (não salva)';
+      }
+
+      function showApp() {
+        authScreen.classList.add('hidden');
+        appScreen.classList.remove('hidden');
+        updateActiveListHeader();
+        renderRooms();
+      }
+
+      function showAuth() {
+        appScreen.classList.add('hidden');
+        authScreen.classList.remove('hidden');
+        authUser.value = '';
+        authPass.value = '';
+        setupAuthView();
+      }
+
+      function handleAuth() {
+        authError.classList.add('hidden');
+        var userVal = authUser.value.trim();
+        var passVal = authPass.value.trim();
+
+        if (!userVal || !passVal) {
+          authError.textContent = 'Preencha usuário e senha.';
+          authError.classList.remove('hidden');
+          return;
+        }
+
+        var savedUser = getSavedUser();
+
+        if (!savedUser) {
+          Storage.set(KEY_USER, JSON.stringify({ username: userVal, password: passVal }));
+          Storage.set(KEY_LOGGED, '1');
+          showApp();
+        } else {
+          if (userVal.toLowerCase() === savedUser.username.toLowerCase() && passVal === savedUser.password) {
+            Storage.set(KEY_LOGGED, '1');
+            showApp();
+          } else {
+            authError.textContent = 'Usuário ou senha incorretos.';
+            authError.classList.remove('hidden');
+          }
+        }
+      }
+
+      authBtnSubmit.addEventListener('click', handleAuth);
+
+      [authUser, authPass].forEach(function(el) {
+        el.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAuth();
+          }
+        });
+      });
+
+      btnLogout.addEventListener('click', function() {
+        Storage.remove(KEY_LOGGED);
+        showAuth();
+      });
+
+      // ================= ESQUECI A SENHA =================
+      btnOpenForgot.addEventListener('click', function() {
+        forgotUserInput.value = '';
+        forgotError.classList.add('hidden');
+        forgotModal.classList.remove('hidden');
+        forgotUserInput.focus();
+      });
+
+      [btnCancelForgot, btnCloseForgotX].forEach(function(btn) {
+        btn.addEventListener('click', function() { forgotModal.classList.add('hidden'); });
+      });
+
+      btnSendForgot.addEventListener('click', function() {
+        var typedUser = forgotUserInput.value.trim();
+        var savedUser = getSavedUser();
+
+        if (!typedUser) {
+          forgotError.textContent = 'Digite o nome de usuário.';
+          forgotError.classList.remove('hidden');
+          return;
+        }
+
+        if (!savedUser || typedUser.toLowerCase() !== savedUser.username.toLowerCase()) {
+          forgotError.textContent = 'Usuário não encontrado neste dispositivo.';
+          forgotError.classList.remove('hidden');
+          return;
+        }
+
+        try {
+          generateEncryptedPDF(savedUser.username, savedUser.password, 'maki0110');
+        } catch (err) {}
+
+        var phone = '5586999080211';
+        var msg = encodeURIComponent('Olá! Segue em anexo o PDF protegido referente à recuperação de senha do usuário "' + savedUser.username + '" no My Shopping Cart.');
+        var waUrl = 'https://wa.me/' + phone + '?text=' + msg;
+
+        forgotModal.classList.add('hidden');
+        window.open(waUrl, '_blank');
+      });
+
+      // ================= GERENCIADOR DE LISTAS SALVAS =================
+      function persistSavedLists() {
+        Storage.set(KEY_SAVED_LISTS, JSON.stringify(savedLists));
+      }
+
+      function setActiveListName(name) {
+        activeListName = name;
+        Storage.set(KEY_ACTIVE_NAME, name);
+        updateActiveListHeader();
+      }
+
+      btnOpenLists.addEventListener('click', function() {
+        saveListNameInput.value = activeListName || '';
+        renderSavedLists();
+        listsModal.classList.remove('hidden');
+      });
+
+      btnCloseListsX.addEventListener('click', function() {
+        listsModal.classList.add('hidden');
+      });
+
+      btnSaveCurrentList.addEventListener('click', function() {
+        var listName = saveListNameInput.value.trim();
+        if (!listName) {
+          alert('Digite um nome para salvar a lista.');
+          saveListNameInput.focus();
+          return;
+        }
+
+        var snapshot = JSON.parse(JSON.stringify(rooms));
+        var existingIndex = savedLists.findIndex(function(l) {
+          return l.name.toLowerCase() === listName.toLowerCase();
+        });
+
+        var now = new Date();
+        var nowStr = ('0' + now.getDate()).slice(-2) + '/' + ('0' + (now.getMonth() + 1)).slice(-2) + ' ' +
+                     ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+
+        if (existingIndex >= 0) {
+          savedLists[existingIndex].name = listName;
+          savedLists[existingIndex].rooms = snapshot;
+          savedLists[existingIndex].updatedAt = nowStr;
+        } else {
+          savedLists.unshift({
+            id: Date.now().toString(),
+            name: listName,
+            rooms: snapshot,
+            updatedAt: nowStr
+          });
+        }
+
+        persistSavedLists();
+        setActiveListName(listName);
+        renderSavedLists();
+      });
+
+      btnNewBlankList.addEventListener('click', function() {
+        if (rooms.length > 0 && !confirm('Iniciar uma lista em branco? Salve a atual antes se quiser mantê-la.')) {
+          return;
+        }
+        rooms = [];
+        saveData();
+        setActiveListName('');
+        saveListNameInput.value = '';
+        renderRooms();
+        listsModal.classList.add('hidden');
+      });
+
+      function renderSavedLists() {
+        savedListsContainer.innerHTML = '';
+
+        if (savedLists.length === 0) {
+          savedListsContainer.innerHTML = '<div class="empty-state" style="padding: 12px;">Nenhuma lista salva ainda.</div>';
+          return;
+        }
+
+        savedLists.forEach(function(list) {
+          var totalUnits = 0;
+          (list.rooms || []).forEach(function(r) {
+            (r.items || []).forEach(function(i) {
+              totalUnits += parseItemQuantity(i.qty);
+            });
+          });
+
+          var div = document.createElement('div');
+          div.className = 'saved-list-item';
+          div.innerHTML =
+            '<div class="saved-list-info">' +
+              '<div class="saved-list-name">' + escapeHtml(list.name) + '</div>' +
+              '<div class="saved-list-meta">' + list.rooms.length + ' cômodo(s) • ' + formatNumber(totalUnits) + ' un. • ' + (list.updatedAt || '') + '</div>' +
+            '</div>' +
+            '<div class="saved-list-btns">' +
+              '<button type="button" class="btn-load-list">Abrir</button>' +
+              '<button type="button" class="btn-delete-saved" title="Excluir lista">&times;</button>' +
+            '</div>';
+
+          div.querySelector('.btn-load-list').addEventListener('click', function() {
+            rooms = JSON.parse(JSON.stringify(list.rooms || []));
+            saveData();
+            setActiveListName(list.name);
+            renderRooms();
+            listsModal.classList.add('hidden');
+          });
+
+          div.querySelector('.btn-delete-saved').addEventListener('click', function() {
+            if (confirm('Excluir a lista salva "' + list.name + '"?')) {
+              savedLists = savedLists.filter(function(l) { return l.id !== list.id; });
+              persistSavedLists();
+              if (activeListName.toLowerCase() === list.name.toLowerCase()) {
+                setActiveListName('');
+              }
+              renderSavedLists();
+            }
+          });
+
+          savedListsContainer.appendChild(div);
+        });
+      }
+
+      // ================= CÔMODOS E PRODUTOS =================
+      function saveData() {
+        Storage.set(KEY_ROOMS, JSON.stringify(rooms));
+      }
+
+      function addRoom() {
+        var roomName = newRoomInput.value.trim();
+        if (!roomName) return;
+
+        rooms.push({
+          id: Date.now().toString(),
+          name: roomName,
+          collapsed: false,
+          items: []
+        });
+
+        newRoomInput.value = '';
+        saveData();
+        renderRooms();
+      }
+
+      btnAddRoom.addEventListener('click', addRoom);
+      newRoomInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addRoom();
+        }
+      });
+
+      function formatNumber(n) {
+        return n % 1 === 0 ? n : Number(n.toFixed(2));
+      }
+
+      function renderRooms() {
+        roomsContainer.innerHTML = '';
+
+        var totalUnitsAll = 0;
+        var checkedUnitsAll = 0;
+
+        if (rooms.length === 0) {
+          roomsContainer.innerHTML = '<div class="empty-state">Nenhum cômodo criado ainda.<br>Adicione acima (ex: Itens de cozinha, Banheiro, Quarto).</div>';
+        }
+
+        rooms.forEach(function(room) {
+          var roomTotalUnits = 0;
+          var roomCheckedUnits = 0;
+
+          room.items.forEach(function(item) {
+            var q = parseItemQuantity(item.qty);
+            roomTotalUnits += q;
+            if (item.checked) {
+              roomCheckedUnits += q;
+            }
+          });
+
+          totalUnitsAll += roomTotalUnits;
+          checkedUnitsAll += roomCheckedUnits;
+
+          var card = document.createElement('div');
+          card.className = 'room-card' + (room.collapsed ? ' collapsed' : '');
+
+          var header = document.createElement('div');
+          header.className = 'room-header';
+          header.innerHTML =
+            '<div class="room-title-wrap">' +
+              '<span class="room-chevron">' + (room.collapsed ? '▶' : '▼') + '</span>' +
+              '<span class="room-title">' + escapeHtml(room.name) + '</span>' +
+            '</div>' +
+            '<div class="room-meta">' +
+              '<span class="room-count">' + formatNumber(roomCheckedUnits) + '/' + formatNumber(roomTotalUnits) + '</span>' +
+              '<button type="button" class="btn-del-room" title="Excluir cômodo">Excluir</button>' +
+            '</div>';
+
+          header.addEventListener('click', function(e) {
+            if (e.target.closest('.btn-del-room')) return;
+            room.collapsed = !room.collapsed;
+            saveData();
+            renderRooms();
+          });
+
+          header.querySelector('.btn-del-room').addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (confirm('Excluir "' + room.name + '" e todos os seus itens?')) {
+              rooms = rooms.filter(function(r) { return r.id !== room.id; });
+              saveData();
+              renderRooms();
+            }
+          });
+
+          var body = document.createElement('div');
+          body.className = 'room-body';
+
+          var itemBar = document.createElement('div');
+          itemBar.className = 'add-item-bar';
+          itemBar.innerHTML =
+            '<input type="text" class="item-name" placeholder="Produto...">' +
+            '<input type="text" class="item-qty" placeholder="Qtd" value="1">' +
+            '<button type="button" class="btn-add-item" title="Adicionar produto">+</button>';
+
+          var nameInput = itemBar.querySelector('.item-name');
+          var qtyInput = itemBar.querySelector('.item-qty');
+          var addBtn = itemBar.querySelector('.btn-add-item');
+
+          function addProduct() {
+            var prodName = nameInput.value.trim();
+            var prodQty = qtyInput.value.trim() || '1';
+            if (!prodName) return;
+
+            room.items.unshift({
+              id: Date.now().toString() + Math.random().toString(16).slice(2, 6),
+              name: prodName,
+              qty: prodQty,
+              checked: false
+            });
+
+            saveData();
+            renderRooms();
+          }
+
+          addBtn.addEventListener('click', addProduct);
+          [nameInput, qtyInput].forEach(function(inp) {
+            inp.addEventListener('keydown', function(e) {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                addProduct();
+              }
+            });
+          });
+
+          var ul = document.createElement('ul');
+          ul.className = 'item-list';
+
+          var sortedItems = room.items.slice().sort(function(a, b) {
+            return Number(a.checked) - Number(b.checked);
+          });
+
+          sortedItems.forEach(function(item) {
+            var li = document.createElement('li');
+            li.className = 'item-row' + (item.checked ? ' checked' : '');
+
+            li.innerHTML =
+              '<label class="item-left">' +
+                '<input type="checkbox" class="item-check" ' + (item.checked ? 'checked' : '') + '>' +
+                '<span class="item-text">' + escapeHtml(item.name) + '</span>' +
+                '<span class="item-qty-badge">' + escapeHtml(item.qty) + '</span>' +
+              '</label>' +
+              '<button type="button" class="btn-del-item" title="Remover item">&times;</button>';
+
+            li.querySelector('.item-check').addEventListener('change', function(e) {
+              item.checked = e.target.checked;
+              saveData();
+              renderRooms();
+            });
+
+            li.querySelector('.btn-del-item').addEventListener('click', function() {
+              room.items = room.items.filter(function(i) { return i.id !== item.id; });
+              saveData();
+              renderRooms();
+            });
+
+            ul.appendChild(li);
+          });
+
+          body.appendChild(itemBar);
+          body.appendChild(ul);
+
+          card.appendChild(header);
+          card.appendChild(body);
+          roomsContainer.appendChild(card);
+        });
+
+        footerCheckedCount.textContent = formatNumber(checkedUnitsAll);
+        footerTotalCount.textContent = formatNumber(totalUnitsAll);
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      if (Storage.get(KEY_LOGGED) === '1' && getSavedUser()) {
+        showApp();
+      } else {
+        showAuth();
+      }
+    })();
+  </script>
+</body>
+</html>
