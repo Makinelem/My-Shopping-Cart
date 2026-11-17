@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>My Shopping Cart</title>
-  <!-- Biblioteca jsPDF para gerar o PDF criptografado na recuperação de senha -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
@@ -87,9 +86,9 @@
     input[type="text"],
     input[type="password"] {
       width: 100%;
-      height: 38px;
+      height: 40px;
       padding: 0 10px;
-      font-size: 16px; /* Evita zoom automático no iOS/Android */
+      font-size: 16px;
       border: 1px solid var(--border);
       border-radius: 8px;
       background: #f8fafc;
@@ -105,7 +104,7 @@
 
     .btn {
       width: 100%;
-      height: 40px;
+      height: 42px;
       border: none;
       border-radius: 8px;
       font-size: 14px;
@@ -140,6 +139,7 @@
       font-size: 12px;
       text-align: center;
       margin-top: 8px;
+      font-weight: 600;
     }
 
     /* ================= MODAL ESQUECI A SENHA ================= */
@@ -400,7 +400,6 @@
       flex-shrink: 0;
     }
 
-    /* Estado Marcado (No Carrinho) */
     .item-row.checked {
       background: #f8fafc;
     }
@@ -474,20 +473,20 @@
         <p id="authSubtitle">Crie seu usuário e senha para começar</p>
       </div>
 
-      <form id="authForm">
+      <div id="authBox">
         <div class="form-group">
           <label for="authUser">Usuário</label>
-          <input type="text" id="authUser" placeholder="Ex: joao" autocapitalize="none" required>
+          <input type="text" id="authUser" placeholder="Ex: joao" autocapitalize="none">
         </div>
 
         <div class="form-group">
           <label for="authPass">Senha</label>
-          <input type="password" id="authPass" placeholder="Digite sua senha" required>
+          <input type="password" id="authPass" placeholder="Digite sua senha">
         </div>
 
-        <button type="submit" class="btn btn-primary" id="authBtnSubmit">CRIAR CONTA E ENTRAR</button>
+        <button type="button" class="btn btn-primary" id="authBtnSubmit">CRIAR ACESSO</button>
         <div id="authError" class="error-text hidden"></div>
-      </form>
+      </div>
 
       <div style="text-align: center;">
         <button type="button" id="btnOpenForgot" class="btn btn-link hidden">Esqueci a senha</button>
@@ -499,4 +498,40 @@
   <div id="forgotModal" class="modal-overlay hidden">
     <div class="modal-box">
       <h3>Recuperar Senha</h3>
-      <p>Informe seu nome de usuário. Geraremos um PDF protegido e ab
+      <p>Informe seu nome de usuário. Geraremos um PDF protegido e abriremos o WhatsApp para envio.</p>
+      <div class="form-group">
+        <input type="text" id="forgotUserInput" placeholder="Seu nome de usuário" autocapitalize="none">
+      </div>
+      <div id="forgotError" class="error-text hidden" style="margin-bottom: 8px;"></div>
+      <div class="modal-actions">
+        <button type="button" id="btnCancelForgot" class="btn btn-secondary">Cancelar</button>
+        <button type="button" id="btnSendForgot" class="btn btn-primary" style="margin-top:0;">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TELA 2: APLICATIVO PRINCIPAL ================= -->
+  <section id="appScreen" class="app-screen hidden">
+    <header class="topbar">
+      <span class="topbar-title">My Shopping Cart</span>
+      <button type="button" id="btnLogout" class="btn-logout">Sair</button>
+    </header>
+
+    <main class="container">
+      <form id="addRoomForm" class="add-room-bar">
+        <input type="text" id="newRoomInput" placeholder="Novo cômodo (ex: Itens de cozinha)" required>
+        <button type="submit" class="btn-add-room">+ Cômodo</button>
+      </form>
+
+      <div id="roomsContainer"></div>
+    </main>
+
+    <footer class="bottom-footer">
+      <span>No carrinho: <span id="footerCheckedCount" class="footer-highlight">0</span></span>
+      <span>Total de itens: <span id="footerTotalCount" class="footer-highlight">0</span></span>
+    </footer>
+  </section>
+
+  <script>
+    (function() {
+      // Camada segura de Storage (evita travamento caso
