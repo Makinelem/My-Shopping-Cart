@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<title>My Shopping Cart</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:13px/20px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f1f5f9;color:#0f172a;padding-bottom:64px}
+header{background:#0f172a;color:#fff;padding:10px 12px;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center}
+header b{font-size:16px}header span{font-size:11px;opacity:.8}
+.top{padding:8px 10px;background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:42px;z-index:9}
+.row{display:flex;gap:6px}
+input,select{border:1px solid #cbd5e1;border-radius:8px;padding:7px 8px;font:inherit;min-height:34px;background:#fff}
+input[type=text],input[type=password]{flex:1}
+input[type=number]{width:62px;text-align:center}
+button{border:0;border-radius:8px;padding:7px 10px;min-height:34px;font-weight:700;cursor:pointer}
+.btn-add{background:#2563eb;color:#fff;flex:0 0 78px}
+.btn-cat{background:#e2e8f0;color:#334155;padding:4px 10px;min-height:26px;font-size:12px;line-height:20px}
+.btn-cat.active{background:#0f172a;color:#fff}
+.chips{display:flex;gap:5px;overflow:auto;padding-top:6px}
+main{padding:8px 10px}
+.cat{margin:8px 0 4px}.cat-head{display:flex;justify-content:space-between;padding:4px 2px}.cat-head span{font-size:11px;color:#64748b}
+.list{background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden}
+.item{display:flex;align-items:center;gap:6px;padding:0 8px;height:20px;line-height:20px;border-bottom:1px solid #f1f5f9}
+.item:last-child{border-bottom:0}.item.checked{background:#f0fdf4}.item.checked .name{text-decoration:line-through;color:#94a3b8}
+.check{width:16px;height:16px;min-width:16px;accent-color:#16a34a;margin:0}
+.name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;line-height:20px}
+.qty{font-size:12px;background:#f1f5f9;border-radius:20px;padding:0 6px;line-height:18px;min-width:28px;text-align:center}
+.del{border:0;background:transparent;color:#cbd5e1;font-size:14px;line-height:20px;padding:0 2px}
+footer{position:fixed;left:0;right:0;bottom:0;background:#0f172a;color:#fff;padding:8px 12px;padding-bottom:calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:center;z-index:20}
+footer b{font-size:13px;line-height:20px}.bar{flex:1;height:6px;background:#334155;border-radius:99px;margin:0 10px;overflow:hidden}.fill{height:100%;background:#22c55e}
+.pill{background:#1e293b;padding:2px 8px;border-radius:99px;font-size:11px;line-height:20px}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;background:#0f172a}
+.login-card{background:#fff;border-radius:16px;padding:18px;width:min(380px,100%)}
+.login-card h1{margin:0 0 4px;font-size:22px;line-height:24px}.login-card p{margin:0 0 12px;color:#64748b;line-height:20px;font-size:12px}
+.login-card label{display:block;font-size:11px;font-weight:700;color:#475569;margin:8px 0 3px;text-transform:uppercase}
+.login-card input{width:100%}
+.btn-login{background:#0f172a;color:#fff;width:100%;margin-top:12px}
+.btn-create{background:#2563eb;color:#fff;width:100%;margin-top:6px}
+.link{background:none;color:#2563eb;text-decoration:underline;font-size:12px;line-height:20px;padding:4px 0}
+.hint{font-size:11px;color:#94a3b8;line-height:20px;text-align:center;margin-top:8px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
+.modal.open{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:16px;width:min(360px,100%)}
+.modal-box h3{margin:0 0 4px}.modal-box p{margin:0 0 10px;color:#64748b;font-size:12px;line-height:20px}
+@media(max-width:480px){.row{flex-wrap:wrap}input[type=text]{flex-basis:100%}select{flex:1}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <h1>🛒 My Shopping Cart</h1>
+    <p id="loginSubtitle">Entre com seu usuário e senha.</p>
+    <label>Usuário</label>
+    <input id="loginUser" type="text" placeholder="Ex: maria" autocomplete="username">
+    <label>Senha</label>
+    <input id="loginPass" type="password" placeholder="Sua senha" autocomplete="current-password">
+    <button class="btn-login" id="btnLogin">Entrar</button>
+    <button class="btn-create" id="btnCreate" style="display:none">Criar conta</button>
+    <div style="text-align:center;margin-top:6px">
+      <button class="link" id="btnForgot">Esqueci a senha</button>
+    </div>
+    <div class="hint" id="loginHint">Primeiro acesso? Crie seu usuário e senha. Fica salvo neste aparelho / GitHub Pages (localStorage).</div>
+    <div id="loginMsg" style="font-size:12px;line-height:20px;color:#dc2626;text-align:center;min-height:20px"></div>
+  </div>
+</div>
+
+<div id="appScreen" style="display:none">
+<header><div><b>🛒 My Shopping Cart</b><br><span id="welcomeUser">Lista + Conferência</span></div><span style="display:flex;gap:6px;align-items:center"><span id="headerCount" class="pill">0 / 0</span><button id="btnLogout" style="width:auto;background:#334155;color:#fff;padding:4px 8px;font-size:11px;line-height:20px">Sair</button></span></header>
+<div class="top">
+<div class="row">
+<input id="itemName" type="text" placeholder="Ex: Detergente, Arroz..." autocomplete="off">
+<input id="itemQty" type="number" min="1" value="1">
+<select id="itemCat"><option value="Cozinha">Cozinha</option><option value="Banheiro">Banheiro</option><option value="Quarto">Quarto</option><option value="Sala">Sala</option><option value="Limpeza">Limpeza</option><option value="Outros">Outros</option></select>
+<button class="btn-add" id="addBtn">+ Add</button>
+</div>
+<div class="chips" id="chips">
+<button class="btn-cat active" data-filter="all">Todos</button>
+<button class="btn-cat" data-filter="Cozinha">Cozinha</button>
+<button class="btn-cat" data-filter="Banheiro">Banheiro</button>
+<button class="btn-cat" data-filter="Quarto">Quarto</button>
+<button class="btn-cat" data-filter="Sala">Sala</button>
+<button class="btn-cat" data-filter="Limpeza">Limpeza</button>
+<button class="btn-cat" data-filter="Outros">Outros</button>
+<button class="btn-cat" data-filter="falta">⏳ Faltam</button>
+<button class="btn-cat" data-filter="ok">✅ Carrinho</button>
+</div>
+</div>
+<main id="main"></main>
+<footer>
+<b id="footerTotal">0 itens • 0 no carrinho</b>
+<div class="bar"><div class="fill" id="fill" style="width:0%"></div></div>
+<button id="clearChecked" style="background:#dc2626;color:#fff;width:auto;padding:6px 10px;font-size:12px;line-height:20px">Limpar ✓</button>
+</footer>
+</div>
+
+<div class="modal" id="forgotModal">
+  <div class="modal-box">
+    <h3>Esqueci a senha</h3>
+    <p>Informe seu nome de usuário. Vamos gerar um PDF com sua senha e abrir o WhatsApp para <b>86 99908-0211</b>. O PDF vem com senha de bloqueio: <b>maki0110</b></p>
+    <label style="font-size:11px;font-weight:700;color:#475569">NOME DE USUÁRIO</label>
+    <input id="forgotUser" type="text" placeholder="Seu usuário" style="width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:8px">
+    <div id="forgotMsg" style="font-size:12px;line-height:20px;color:#dc2626;min-height:20px"></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="btnSendForgot" style="flex:1;background:#25D366;color:#fff">Enviar no WhatsApp</button>
+      <button id="btnCloseForgot" style="flex:0 0 90px;background:#e2e8f0">Fechar</button>
+    </div>
+    <p style="margin-top:8px;font-size:11px;color:#94a3b8">⚠️ O WhatsApp não permite enviar anexo automático por link. O PDF será baixado e você só precisa anexar no chat que abrir.</p>
+  </div>
+</div>
+
+<script>
+const WHATSAPP_NUM = "5586999080211";
+const PDF_BLOCK_PASS = "maki0110";
+function getUsers(){ try{return JSON.parse(localStorage.getItem('mys_users')||'[]')}catch(e){return []} }
+function saveUsers(u){ localStorage.setItem('mys_users', JSON.stringify(u)) }
+function getSession(){ return localStorage.getItem('mys_session') }
+function setSession(u){ if(u) localStorage.setItem('mys_session',u); else localStorage.removeItem('mys_session'); }
+const $=id=>document.getElementById(id);
+let items=[], filter='all', currentUser=null;
+const cats=['Cozinha','Banheiro','Quarto','Sala','Limpeza','Outros'];
+function loadItems(){ if(!currentUser) return []; try{return JSON.parse(localStorage.getItem('mys_cart_'+currentUser)||'[]')}catch(e){return []} }
+function saveItems(){ if(currentUser) localStorage.setItem('mys_cart_'+currentUser, JSON.stringify(items)); }
+function checkFirstAccess(){
+  let users=getUsers();
+  if(users.length===0){
+    $('loginSubtitle').textContent='Primeiro acesso: crie seu usuário e senha.';
+    $('btnLogin').style.display='none';
+    $('btnCreate').style.display='block';
+    $('loginHint').textContent='Nenhuma conta ainda. Crie a primeira conta para começar.';
+  } else {
+    $('loginSubtitle').textContent='Entre com seu usuário e senha.';
+    $('btnLogin').style.display='block';
+    $('btnCreate').style.display='none';
+  }
+}
+function showApp(){
+  $('loginScreen').style.display='none';
+  $('appScreen').style.display='block';
+  $('welcomeUser').textContent='Olá, '+currentUser;
+  if(!items.length){
+    items=[
+      {id:1,name:'Arroz 5kg',qty:1,cat:'Cozinha',done:false},
+      {id:2,name:'Detergente',qty:2,cat:'Cozinha',done:false},
+      {id:3,name:'Papel higiênico',qty:1,cat:'Banheiro',done:false},
+      {id:4,name:'Shampoo',qty:1,cat:'Banheiro',done:false},
+      {id:5,name:'Travesseiro',qty:2,cat:'Quarto',done:false},
+    ];
+    saveItems();
+  }
+  render();
+}
+function showLogin(){ $('loginScreen').style.display='flex'; $('appScreen').style.display='none'; checkFirstAccess(); }
+$('btnCreate').onclick=()=>{
+  let u=$('loginUser').value.trim().toLowerCase(), p=$('loginPass').value;
+  if(!u||!p){$('loginMsg').textContent='Informe usuário e senha.';return;}
+  let users=getUsers();
+  if(users.find(x=>x.user===u)){ $('loginMsg').textContent='Usuário já existe. Faça login.'; return; }
+  users.push({user:u, pass:p}); saveUsers(users); setSession(u); currentUser=u; items=loadItems(); showApp();
+};
+$('btnLogin').onclick=()=>{
+  let u=$('loginUser').value.trim().toLowerCase(), p=$('loginPass').value;
+  let users=getUsers(); let found=users.find(x=>x.user===u);
+  if(!found){$('loginMsg').textContent='Usuário não encontrado.';return;}
+  if(found.pass!==p){$('loginMsg').textContent='Senha incorreta.';return;}
+  setSession(u); currentUser=u; items=loadItems(); showApp();
+};
+$('btnLogout').onclick=()=>{ setSession(null); currentUser=null; items=[]; $('loginUser').value=''; $('loginPass').value=''; showLogin(); };
+$('btnForgot').onclick=()=>{ $('forgotUser').value=$('loginUser').value; $('forgotMsg').textContent=''; $('forgotModal').classList.add('open'); };
+$('btnCloseForgot').onclick=()=>$('forgotModal').classList.remove('open');
+$('btnSendForgot').onclick=()=>{
+  let u=$('forgotUser').value.trim().toLowerCase();
+  if(!u){$('forgotMsg').textContent='Informe o nome de usuário.';return;}
+  let users=getUsers(); let found=users.find(x=>x.user===u);
+  if(!found){$('forgotMsg').textContent='Usuário não encontrado neste aparelho.';return;}
+  const { jsPDF } = window.jspdf;
+  let doc=new jsPDF();
+  doc.setFontSize(20); doc.text('My Shopping Cart', 20, 20);
+  doc.setFontSize(12); doc.text('Recuperacao de senha', 20, 30);
+  doc.setFontSize(11);
+  doc.text('Usuario: '+found.user, 20, 45);
+  doc.text('Senha: '+found.pass, 20, 55);
+  doc.text('Senha de bloqueio do PDF: '+PDF_BLOCK_PASS, 20, 70);
+  doc.text('Gerado em: '+new Date().toLocaleString('pt-BR'), 20, 85);
+  doc.setFontSize(9); doc.text('Este documento contem sua senha. Nao compartilhe.', 20, 100);
+  doc.save('senha-my-shopping-cart-'+found.user+'.pdf');
+  let msg = `Olá! Esqueci minha senha do My Shopping Cart.\n\nUsuário: ${found.user}\n\nEstou enviando em anexo o PDF com a senha. Senha de bloqueio do PDF: ${PDF_BLOCK_PASS}\n\n(Anexe o PDF que acabou de baixar: senha-my-shopping-cart-${found.user}.pdf)`;
+  let url = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(msg)}`;
+  window.open(url,'_blank');
+  $('forgotModal').classList.remove('open');
+};
+function render(){
+  let list=items;
+  if(filter!=='all'){
+    if(filter==='falta') list=items.filter(i=>!i.done);
+    else if(filter==='ok') list=items.filter(i=>i.done);
+    else list=items.filter(i=>i.cat===filter);
+  }
+  let main=$('main'); main.innerHTML='';
+  if(!items.length){main.innerHTML='<div style="text-align:center;color:#94a3b8;padding:18px">Nenhum item ainda.</div>';}
+  else if(!list.length){main.innerHTML='<div style="text-align:center;color:#94a3b8;padding:18px">Nada aqui.</div>';}
+  cats.forEach(cat=>{
+    let arr=list.filter(i=>i.cat===cat); if(!arr.length) return;
+    let done=arr.filter(i=>i.done).length;
+    let div=document.createElement('div'); div.className='cat';
+    div.innerHTML=`<div class="cat-head"><b>${cat}</b><span>${done}/${arr.length} no carrinho</span></div><div class="list"></div>`;
+    let l=div.querySelector('.list');
+    arr.forEach(it=>{
+      let row=document.createElement('div'); row.className='item'+(it.done?' checked':'');
+      row.innerHTML=`<input type="checkbox" class="check" ${it.done?'checked':''}><span class="name">${it.name}</span><span class="qty">x${it.qty}</span><button class="del">✕</button>`;
+      row.querySelector('.check').onclick=()=>{it.done=!it.done;saveItems();render();};
+      row.querySelector('.name').onclick=()=>{it.done=!it.done;saveItems();render();};
+      row.querySelector('.del').onclick=()=>{items=items.filter(x=>x.id!==it.id);saveItems();render();};
+      l.appendChild(row);
+    });
+    main.appendChild(div);
+  });
+  let total=items.length, done=items.filter(i=>i.done).length, falta=total-done;
+  $('footerTotal').textContent=`${total} itens • ${done} no carrinho • ${falta} faltam`;
+  $('headerCount').textContent=`${done} / ${total}`;
+  $('fill').style.width= total? (done/total*100)+'%':'0%';
+}
+function add(){
+  let name=$('itemName').value.trim(); if(!name) return;
+  items.push({id:Date.now(),name, qty:+$('itemQty').value||1, cat:$('itemCat').value, done:false});
+  saveItems(); $('itemName').value=''; $('itemName').focus(); render();
+}
+$('addBtn').onclick=add;
+$('itemName').addEventListener('keydown',e=>{if(e.key==='Enter')add();});
+document.querySelectorAll('.btn-cat').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.btn-cat').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render();}});
+$('clearChecked').onclick=()=>{ if(confirm('Limpar só os conferidos?')){items=items.filter(i=>!i.done);saveItems();render();}};
+let sess=getSession();
+if(sess && getUsers().find(u=>u.user===sess)){ currentUser=sess; items=loadItems(); showApp(); } else { showLogin(); }
+</script>
+</body>
+</html>
