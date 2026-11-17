@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>My Shopping Cart</title>
+  <title>My Shopping Cart v2</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
@@ -309,8 +309,8 @@
       padding: 0 4px;
     }
 
-    /* Form de Adicionar Item dentro do Cômodo */
-    .add-item-form {
+    /* Barra de Adicionar Item dentro do Cômodo */
+    .add-item-bar {
       display: flex;
       gap: 4px;
       padding: 6px 8px;
@@ -318,14 +318,14 @@
       background: #ffffff;
     }
 
-    .add-item-form input.item-name {
+    .add-item-bar input.item-name {
       flex: 1;
       height: 30px;
       font-size: 14px;
       padding: 0 8px;
     }
 
-    .add-item-form input.item-qty {
+    .add-item-bar input.item-qty {
       width: 68px;
       height: 30px;
       font-size: 14px;
@@ -473,7 +473,7 @@
         <p id="authSubtitle">Crie seu usuário e senha para começar</p>
       </div>
 
-      <div id="authBox">
+      <div>
         <div class="form-group">
           <label for="authUser">Usuário</label>
           <input type="text" id="authUser" placeholder="Ex: joao" autocapitalize="none">
@@ -518,10 +518,10 @@
     </header>
 
     <main class="container">
-      <form id="addRoomForm" class="add-room-bar">
-        <input type="text" id="newRoomInput" placeholder="Novo cômodo (ex: Itens de cozinha)" required>
-        <button type="submit" class="btn-add-room">+ Cômodo</button>
-      </form>
+      <div class="add-room-bar">
+        <input type="text" id="newRoomInput" placeholder="Novo cômodo (ex: Itens de cozinha)">
+        <button type="button" id="btnAddRoom" class="btn-add-room">+ Cômodo</button>
+      </div>
 
       <div id="roomsContainer"></div>
     </main>
@@ -534,4 +534,410 @@
 
   <script>
     (function() {
-      // Camada segura de Storage (evita travamento caso
+      // Persistência Tripla: localStorage + window.name + Cookie
+      // Garante funcionamento mesmo se o navegador bloquear localStorage em arquivos locais
+      function readWindowState() {
+        try {
+          if (window.name && window.name.startsWith('MSC_STATE:')) {
+            return JSON.parse(window.name.slice(10));
+          }
+        } catch (e) {}
+        return {};
+      }
+
+      function writeWindowState(obj) {
+        try {
+          window.name = 'MSC_STATE:' + JSON.stringify(obj);
+        } catch (e) {}
+      }
+
+      const stateCache = readWindowState();
+
+      const Storage = {
+        get(key) {
+          // 1. Tenta localStorage
+          try {
+            const val = window.localStorage.getItem(key);
+            if (val !== null) return val;
+          } catch (e) {}
+
+          // 2. Tenta window.name
+          if (stateCache[key] !== undefined) return stateCache[key];
+
+          // 3. Tenta Cookie
+          try {
+            const match = document.cookie.match(new RegExp('(?:^|; )' + key + '=([^;]*)'));
+            if (match) return decodeURIComponent(match[1]);
+          } catch (e) {}
+
+          return null;
+        },
+        set(key, val) {
+          stateCache[key] = val;
+          writeWindowState(stateCache);
+
+          try {
+            window.localStorage.setItem(key, val);
+          } catch (e) {}
+
+          try {
+            const d = new Date();
+            d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+            document.cookie = `${key}=${encodeURIComponent(val)};expires=${d.toUTCString()};path=/`;
+          } catch (e) {}
+        },
+        remove(key) {
+          delete stateCache[key];
+          writeWindowState(stateCache);
+
+          try {
+            window.localStorage.removeItem(key);
+          } catch (e) {}
+
+          try {
+            document.cookie = `${key}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+          } catch (e) {}
+        }
+      };
+
+      const KEY_USER = 'msc_user_v2';
+      const KEY_LOGGED = 'msc_logged_v2';
+      const KEY_ROOMS = 'msc_rooms_v2';
+
+      const authScreen = document.getElementById('authScreen');
+      const authSubtitle = document.getElementById('authSubtitle');
+      const authUser = document.getElementById('authUser');
+      const authPass = document.getElementById('authPass');
+      const authBtnSubmit = document.getElementById('authBtnSubmit');
+      const authError = document.getElementById('authError');
+      const btnOpenForgot = document.getElementById('btnOpenForgot');
+
+      const forgotModal = document.getElementById('forgotModal');
+      const forgotUserInput = document.getElementById('forgotUserInput');
+      const forgotError = document.getElementById('forgotError');
+      const btnCancelForgot = document.getElementById('btnCancelForgot');
+      const btnSendForgot = document.getElementById('btnSendForgot');
+
+      const appScreen = document.getElementById('appScreen');
+      const btnLogout = document.getElementById('btnLogout');
+      const newRoomInput = document.getElementById('newRoomInput');
+      const btnAddRoom = document.getElementById('btnAddRoom');
+      const roomsContainer = document.getElementById('roomsContainer');
+      const footerCheckedCount = document.getElementById('footerCheckedCount');
+      const footerTotalCount = document.getElementById('footerTotalCount');
+
+      let rooms = [];
+      try {
+        const rawRooms = Storage.get(KEY_ROOMS);
+        rooms = rawRooms ? JSON.parse(rawRooms) : [];
+      } catch (e) {
+        rooms = [];
+      }
+
+      function getSavedUser() {
+        try {
+          const raw = Storage.get(KEY_USER);
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function setupAuthView() {
+        const savedUser = getSavedUser();
+        authError.classList.add('hidden');
+
+        if (!savedUser) {
+          authSubtitle.textContent = 'Primeiro acesso: crie seu usuário e senha';
+          authBtnSubmit.textContent = 'CRIAR ACESSO';
+          btnOpenForgot.classList.add('hidden');
+        } else {
+          authSubtitle.textContent = 'Entre com seu usuário e senha';
+          authBtnSubmit.textContent = 'ENTRAR';
+          btnOpenForgot.classList.remove('hidden');
+        }
+      }
+
+      function showApp() {
+        authScreen.classList.add('hidden');
+        appScreen.classList.remove('hidden');
+        renderRooms();
+      }
+
+      function showAuth() {
+        appScreen.classList.add('hidden');
+        authScreen.classList.remove('hidden');
+        authUser.value = '';
+        authPass.value = '';
+        setupAuthView();
+      }
+
+      function handleAuth() {
+        authError.classList.add('hidden');
+        const userVal = authUser.value.trim();
+        const passVal = authPass.value.trim();
+
+        if (!userVal || !passVal) {
+          authError.textContent = 'Preencha usuário e senha.';
+          authError.classList.remove('hidden');
+          return;
+        }
+
+        const savedUser = getSavedUser();
+
+        if (!savedUser) {
+          Storage.set(KEY_USER, JSON.stringify({ username: userVal, password: passVal }));
+          Storage.set(KEY_LOGGED, '1');
+          showApp();
+        } else {
+          if (userVal.toLowerCase() === savedUser.username.toLowerCase() && passVal === savedUser.password) {
+            Storage.set(KEY_LOGGED, '1');
+            showApp();
+          } else {
+            authError.textContent = 'Usuário ou senha incorretos.';
+            authError.classList.remove('hidden');
+          }
+        }
+      }
+
+      authBtnSubmit.addEventListener('click', handleAuth);
+
+      [authUser, authPass].forEach(el => {
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAuth();
+          }
+        });
+      });
+
+      btnLogout.addEventListener('click', () => {
+        Storage.remove(KEY_LOGGED);
+        showAuth();
+      });
+
+      // ================= ESQUECI A SENHA =================
+      btnOpenForgot.addEventListener('click', () => {
+        forgotUserInput.value = '';
+        forgotError.classList.add('hidden');
+        forgotModal.classList.remove('hidden');
+        forgotUserInput.focus();
+      });
+
+      btnCancelForgot.addEventListener('click', () => {
+        forgotModal.classList.add('hidden');
+      });
+
+      btnSendForgot.addEventListener('click', () => {
+        const typedUser = forgotUserInput.value.trim();
+        const savedUser = getSavedUser();
+
+        if (!typedUser) {
+          forgotError.textContent = 'Digite o nome de usuário.';
+          forgotError.classList.remove('hidden');
+          return;
+        }
+
+        if (!savedUser || typedUser.toLowerCase() !== savedUser.username.toLowerCase()) {
+          forgotError.textContent = 'Usuário não encontrado neste dispositivo.';
+          forgotError.classList.remove('hidden');
+          return;
+        }
+
+        try {
+          if (window.jspdf && window.jspdf.jsPDF) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+              encryption: {
+                userPassword: 'maki0110',
+                ownerPassword: 'maki0110',
+                userPermissions: ['print', 'copy']
+              }
+            });
+
+            doc.setFontSize(16);
+            doc.text('My Shopping Cart - Recuperação de Acesso', 15, 22);
+            doc.setFontSize(12);
+            doc.text(`Usuário: ${savedUser.username}`, 15, 36);
+            doc.text(`Senha cadastrada: ${savedUser.password}`, 15, 45);
+            doc.setFontSize(10);
+            doc.text('Documento protegido gerado pelo aplicativo.', 15, 60);
+
+            doc.save(`senha_${savedUser.username}.pdf`);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+
+        const phone = '5586999080211';
+        const msg = encodeURIComponent(`Olá! Segue em anexo o PDF protegido referente à recuperação de senha do usuário "${savedUser.username}" no My Shopping Cart.`);
+        const waUrl = `https://wa.me/${phone}?text=${msg}`;
+
+        forgotModal.classList.add('hidden');
+        window.open(waUrl, '_blank');
+      });
+
+      // ================= CÔMODOS E PRODUTOS =================
+      function saveData() {
+        Storage.set(KEY_ROOMS, JSON.stringify(rooms));
+      }
+
+      function addRoom() {
+        const roomName = newRoomInput.value.trim();
+        if (!roomName) return;
+
+        rooms.push({
+          id: Date.now().toString(),
+          name: roomName,
+          items: []
+        });
+
+        newRoomInput.value = '';
+        saveData();
+        renderRooms();
+      }
+
+      btnAddRoom.addEventListener('click', addRoom);
+      newRoomInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addRoom();
+        }
+      });
+
+      function renderRooms() {
+        roomsContainer.innerHTML = '';
+
+        let totalItems = 0;
+        let checkedItems = 0;
+
+        if (rooms.length === 0) {
+          roomsContainer.innerHTML = '<div class="empty-state">Nenhum cômodo criado ainda.<br>Adicione acima (ex: Itens de cozinha, Banheiro, Quarto).</div>';
+        }
+
+        rooms.forEach(room => {
+          const roomTotal = room.items.length;
+          const roomChecked = room.items.filter(i => i.checked).length;
+
+          totalItems += roomTotal;
+          checkedItems += roomChecked;
+
+          const card = document.createElement('div');
+          card.className = 'room-card';
+
+          const header = document.createElement('div');
+          header.className = 'room-header';
+          header.innerHTML = `
+            <span class="room-title">${escapeHtml(room.name)}</span>
+            <div class="room-meta">
+              <span class="room-count">${roomChecked}/${roomTotal}</span>
+              <button type="button" class="btn-del-room" title="Excluir cômodo">Excluir</button>
+            </div>
+          `;
+
+          header.querySelector('.btn-del-room').addEventListener('click', () => {
+            if (confirm(`Excluir "${room.name}" e todos os seus itens?`)) {
+              rooms = rooms.filter(r => r.id !== room.id);
+              saveData();
+              renderRooms();
+            }
+          });
+
+          const itemBar = document.createElement('div');
+          itemBar.className = 'add-item-bar';
+          itemBar.innerHTML = `
+            <input type="text" class="item-name" placeholder="Produto...">
+            <input type="text" class="item-qty" placeholder="Qtd" value="1">
+            <button type="button" class="btn-add-item" title="Adicionar produto">+</button>
+          `;
+
+          const nameInput = itemBar.querySelector('.item-name');
+          const qtyInput = itemBar.querySelector('.item-qty');
+          const addBtn = itemBar.querySelector('.btn-add-item');
+
+          function addProduct() {
+            const prodName = nameInput.value.trim();
+            const prodQty = qtyInput.value.trim() || '1';
+            if (!prodName) return;
+
+            room.items.unshift({
+              id: Date.now().toString() + Math.random().toString(16).slice(2, 6),
+              name: prodName,
+              qty: prodQty,
+              checked: false
+            });
+
+            saveData();
+            renderRooms();
+          }
+
+          addBtn.addEventListener('click', addProduct);
+          [nameInput, qtyInput].forEach(inp => {
+            inp.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                addProduct();
+              }
+            });
+          });
+
+          const ul = document.createElement('ul');
+          ul.className = 'item-list';
+
+          const sortedItems = [...room.items].sort((a, b) => Number(a.checked) - Number(b.checked));
+
+          sortedItems.forEach(item => {
+            const li = document.createElement('li');
+            li.className = `item-row ${item.checked ? 'checked' : ''}`;
+
+            li.innerHTML = `
+              <label class="item-left">
+                <input type="checkbox" class="item-check" ${item.checked ? 'checked' : ''}>
+                <span class="item-text">${escapeHtml(item.name)}</span>
+                <span class="item-qty-badge">${escapeHtml(item.qty)}</span>
+              </label>
+              <button type="button" class="btn-del-item" title="Remover item">&times;</button>
+            `;
+
+            li.querySelector('.item-check').addEventListener('change', (e) => {
+              item.checked = e.target.checked;
+              saveData();
+              renderRooms();
+            });
+
+            li.querySelector('.btn-del-item').addEventListener('click', () => {
+              room.items = room.items.filter(i => i.id !== item.id);
+              saveData();
+              renderRooms();
+            });
+
+            ul.appendChild(li);
+          });
+
+          card.appendChild(header);
+          card.appendChild(itemBar);
+          card.appendChild(ul);
+          roomsContainer.appendChild(card);
+        });
+
+        footerCheckedCount.textContent = checkedItems;
+        footerTotalCount.textContent = totalItems;
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      if (Storage.get(KEY_LOGGED) === '1' && getSavedUser()) {
+        showApp();
+      } else {
+        showAuth();
+      }
+    })();
+  </script>
+</body>
+</html>
