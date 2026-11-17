@@ -18,9 +18,9 @@ input[type=text],input[type=password]{flex:1}
 input[type=number]{width:62px;text-align:center}
 button{border:0;border-radius:8px;padding:7px 10px;min-height:34px;font-weight:700;cursor:pointer}
 .btn-add{background:#2563eb;color:#fff;flex:0 0 78px}
-.btn-cat{background:#e2e8f0;color:#334155;padding:4px 10px;min-height:26px;font-size:12px;line-height:20px}
+.btn-cat{background:#e2e8f0;color:#334155;padding:4px 12px;min-height:26px;font-size:12px;line-height:20px}
 .btn-cat.active{background:#0f172a;color:#fff}
-.chips{display:flex;gap:5px;overflow:auto;padding-top:6px}
+.chips{display:flex;gap:6px;padding-top:6px}
 main{padding:8px 10px}
 .cat{margin:8px 0 4px}.cat-head{display:flex;justify-content:space-between;padding:4px 2px}.cat-head span{font-size:11px;color:#64748b}
 .list{background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden}
@@ -56,40 +56,40 @@ footer b{font-size:13px;line-height:20px}.bar{flex:1;height:6px;background:#3341
     <h1>🛒 My Shopping Cart</h1>
     <p id="loginSubtitle">Entre com seu usuário e senha.</p>
     <label>Usuário</label>
-    <input id="loginUser" type="text" placeholder="Ex: maria" autocomplete="username">
+    <input id="loginUser" type="text" placeholder="Ex: maria">
     <label>Senha</label>
-    <input id="loginPass" type="password" placeholder="Sua senha" autocomplete="current-password">
+    <input id="loginPass" type="password" placeholder="Sua senha">
     <button class="btn-login" id="btnLogin">Entrar</button>
     <button class="btn-create" id="btnCreate" style="display:none">Criar conta</button>
-    <div style="text-align:center;margin-top:6px">
-      <button class="link" id="btnForgot">Esqueci a senha</button>
-    </div>
-    <div class="hint" id="loginHint">Primeiro acesso? Crie seu usuário e senha. Fica salvo neste aparelho / GitHub Pages (localStorage).</div>
+    <div style="text-align:center;margin-top:6px"><button class="link" id="btnForgot">Esqueci a senha</button></div>
+    <div class="hint" id="loginHint">Primeiro acesso? Crie seu usuário e senha.</div>
     <div id="loginMsg" style="font-size:12px;line-height:20px;color:#dc2626;text-align:center;min-height:20px"></div>
   </div>
 </div>
 
 <div id="appScreen" style="display:none">
 <header><div><b>🛒 My Shopping Cart</b><br><span id="welcomeUser">Lista + Conferência</span></div><span style="display:flex;gap:6px;align-items:center"><span id="headerCount" class="pill">0 / 0</span><button id="btnLogout" style="width:auto;background:#334155;color:#fff;padding:4px 8px;font-size:11px;line-height:20px">Sair</button></span></header>
+
 <div class="top">
+<!-- 1. ADICIONAR CÔMODO -->
 <div class="row">
-<input id="itemName" type="text" placeholder="Ex: Detergente, Arroz..." autocomplete="off">
-<input id="itemQty" type="number" min="1" value="1">
-<select id="itemCat"><option value="Cozinha">Cozinha</option><option value="Banheiro">Banheiro</option><option value="Quarto">Quarto</option><option value="Sala">Sala</option><option value="Limpeza">Limpeza</option><option value="Outros">Outros</option></select>
-<button class="btn-add" id="addBtn">+ Add</button>
+<input id="roomName" type="text" placeholder="Novo cômodo: Ex: Cozinha, Banheiro, Quarto...">
+<button id="addRoomBtn" style="background:#0f172a;color:#fff;flex:0 0 90px">+ Cômodo</button>
 </div>
-<div class="chips" id="chips">
-<button class="btn-cat active" data-filter="all">Todos</button>
-<button class="btn-cat" data-filter="Cozinha">Cozinha</button>
-<button class="btn-cat" data-filter="Banheiro">Banheiro</button>
-<button class="btn-cat" data-filter="Quarto">Quarto</button>
-<button class="btn-cat" data-filter="Sala">Sala</button>
-<button class="btn-cat" data-filter="Limpeza">Limpeza</button>
-<button class="btn-cat" data-filter="Outros">Outros</button>
-<button class="btn-cat" data-filter="falta">⏳ Faltam</button>
+<!-- 2. ADICIONAR ITEM NO CÔMODO -->
+<div class="row" style="margin-top:6px">
+<input id="itemName" type="text" placeholder="Ex: Detergente, Arroz...">
+<input id="itemQty" type="number" min="1" value="1">
+<select id="itemCat"></select>
+<button class="btn-add" id="addBtn">+ Item</button>
+</div>
+<!-- 3. SÓ FALTAM E CARRINHO -->
+<div class="chips">
+<button class="btn-cat active" data-filter="falta">⏳ Faltam</button>
 <button class="btn-cat" data-filter="ok">✅ Carrinho</button>
 </div>
 </div>
+
 <main id="main"></main>
 <footer>
 <b id="footerTotal">0 itens • 0 no carrinho</b>
@@ -101,7 +101,7 @@ footer b{font-size:13px;line-height:20px}.bar{flex:1;height:6px;background:#3341
 <div class="modal" id="forgotModal">
   <div class="modal-box">
     <h3>Esqueci a senha</h3>
-    <p>Informe seu nome de usuário. Vamos gerar um PDF com sua senha e abrir o WhatsApp para <b>86 99908-0211</b>. O PDF vem com senha de bloqueio: <b>maki0110</b></p>
+    <p>Informe seu nome de usuário. Vamos gerar um PDF com sua senha e abrir o WhatsApp para <b>86 99908-0211</b>. Senha de bloqueio do PDF: <b>maki0110</b></p>
     <label style="font-size:11px;font-weight:700;color:#475569">NOME DE USUÁRIO</label>
     <input id="forgotUser" type="text" placeholder="Seu usuário" style="width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:8px">
     <div id="forgotMsg" style="font-size:12px;line-height:20px;color:#dc2626;min-height:20px"></div>
@@ -109,7 +109,7 @@ footer b{font-size:13px;line-height:20px}.bar{flex:1;height:6px;background:#3341
       <button id="btnSendForgot" style="flex:1;background:#25D366;color:#fff">Enviar no WhatsApp</button>
       <button id="btnCloseForgot" style="flex:0 0 90px;background:#e2e8f0">Fechar</button>
     </div>
-    <p style="margin-top:8px;font-size:11px;color:#94a3b8">⚠️ O WhatsApp não permite enviar anexo automático por link. O PDF será baixado e você só precisa anexar no chat que abrir.</p>
+    <p style="margin-top:8px;font-size:11px;color:#94a3b8">O PDF será baixado e você anexa no chat que abrir.</p>
   </div>
 </div>
 
@@ -121,38 +121,27 @@ function saveUsers(u){ localStorage.setItem('mys_users', JSON.stringify(u)) }
 function getSession(){ return localStorage.getItem('mys_session') }
 function setSession(u){ if(u) localStorage.setItem('mys_session',u); else localStorage.removeItem('mys_session'); }
 const $=id=>document.getElementById(id);
-let items=[], filter='all', currentUser=null;
-const cats=['Cozinha','Banheiro','Quarto','Sala','Limpeza','Outros'];
-function loadItems(){ if(!currentUser) return []; try{return JSON.parse(localStorage.getItem('mys_cart_'+currentUser)||'[]')}catch(e){return []} }
-function saveItems(){ if(currentUser) localStorage.setItem('mys_cart_'+currentUser, JSON.stringify(items)); }
+let items=[], rooms=[], filter='falta', currentUser=null;
+function loadData(){
+  if(!currentUser) return;
+  try{ items=JSON.parse(localStorage.getItem('mys_cart_'+currentUser)||'[]')}catch(e){items=[]}
+  try{ rooms=JSON.parse(localStorage.getItem('mys_rooms_'+currentUser)||'[]')}catch(e){rooms=[]}
+  if(!rooms.length){ rooms=['Cozinha','Banheiro','Quarto']; saveData(); }
+}
+function saveData(){ if(!currentUser) return; localStorage.setItem('mys_cart_'+currentUser, JSON.stringify(items)); localStorage.setItem('mys_rooms_'+currentUser, JSON.stringify(rooms)); }
+function refreshRooms(){
+  $('itemCat').innerHTML='';
+  rooms.forEach(r=>{ let o=document.createElement('option'); o.value=r; o.textContent=r; $('itemCat').appendChild(o); });
+}
 function checkFirstAccess(){
   let users=getUsers();
-  if(users.length===0){
-    $('loginSubtitle').textContent='Primeiro acesso: crie seu usuário e senha.';
-    $('btnLogin').style.display='none';
-    $('btnCreate').style.display='block';
-    $('loginHint').textContent='Nenhuma conta ainda. Crie a primeira conta para começar.';
-  } else {
-    $('loginSubtitle').textContent='Entre com seu usuário e senha.';
-    $('btnLogin').style.display='block';
-    $('btnCreate').style.display='none';
-  }
+  if(users.length===0){ $('loginSubtitle').textContent='Primeiro acesso: crie seu usuário e senha.'; $('btnLogin').style.display='none'; $('btnCreate').style.display='block'; }
+  else { $('loginSubtitle').textContent='Entre com seu usuário e senha.'; $('btnLogin').style.display='block'; $('btnCreate').style.display='none'; }
 }
 function showApp(){
-  $('loginScreen').style.display='none';
-  $('appScreen').style.display='block';
+  $('loginScreen').style.display='none'; $('appScreen').style.display='block';
   $('welcomeUser').textContent='Olá, '+currentUser;
-  if(!items.length){
-    items=[
-      {id:1,name:'Arroz 5kg',qty:1,cat:'Cozinha',done:false},
-      {id:2,name:'Detergente',qty:2,cat:'Cozinha',done:false},
-      {id:3,name:'Papel higiênico',qty:1,cat:'Banheiro',done:false},
-      {id:4,name:'Shampoo',qty:1,cat:'Banheiro',done:false},
-      {id:5,name:'Travesseiro',qty:2,cat:'Quarto',done:false},
-    ];
-    saveItems();
-  }
-  render();
+  loadData(); refreshRooms(); render();
 }
 function showLogin(){ $('loginScreen').style.display='flex'; $('appScreen').style.display='none'; checkFirstAccess(); }
 $('btnCreate').onclick=()=>{
@@ -160,16 +149,16 @@ $('btnCreate').onclick=()=>{
   if(!u||!p){$('loginMsg').textContent='Informe usuário e senha.';return;}
   let users=getUsers();
   if(users.find(x=>x.user===u)){ $('loginMsg').textContent='Usuário já existe. Faça login.'; return; }
-  users.push({user:u, pass:p}); saveUsers(users); setSession(u); currentUser=u; items=loadItems(); showApp();
+  users.push({user:u, pass:p}); saveUsers(users); setSession(u); currentUser=u; showApp();
 };
 $('btnLogin').onclick=()=>{
   let u=$('loginUser').value.trim().toLowerCase(), p=$('loginPass').value;
   let users=getUsers(); let found=users.find(x=>x.user===u);
   if(!found){$('loginMsg').textContent='Usuário não encontrado.';return;}
   if(found.pass!==p){$('loginMsg').textContent='Senha incorreta.';return;}
-  setSession(u); currentUser=u; items=loadItems(); showApp();
+  setSession(u); currentUser=u; showApp();
 };
-$('btnLogout').onclick=()=>{ setSession(null); currentUser=null; items=[]; $('loginUser').value=''; $('loginPass').value=''; showLogin(); };
+$('btnLogout').onclick=()=>{ setSession(null); currentUser=null; items=[]; rooms=[]; $('loginUser').value=''; $('loginPass').value=''; showLogin(); };
 $('btnForgot').onclick=()=>{ $('forgotUser').value=$('loginUser').value; $('forgotMsg').textContent=''; $('forgotModal').classList.add('open'); };
 $('btnCloseForgot').onclick=()=>$('forgotModal').classList.remove('open');
 $('btnSendForgot').onclick=()=>{
@@ -186,35 +175,38 @@ $('btnSendForgot').onclick=()=>{
   doc.text('Senha: '+found.pass, 20, 55);
   doc.text('Senha de bloqueio do PDF: '+PDF_BLOCK_PASS, 20, 70);
   doc.text('Gerado em: '+new Date().toLocaleString('pt-BR'), 20, 85);
-  doc.setFontSize(9); doc.text('Este documento contem sua senha. Nao compartilhe.', 20, 100);
   doc.save('senha-my-shopping-cart-'+found.user+'.pdf');
-  let msg = `Olá! Esqueci minha senha do My Shopping Cart.\n\nUsuário: ${found.user}\n\nEstou enviando em anexo o PDF com a senha. Senha de bloqueio do PDF: ${PDF_BLOCK_PASS}\n\n(Anexe o PDF que acabou de baixar: senha-my-shopping-cart-${found.user}.pdf)`;
-  let url = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(msg)}`;
-  window.open(url,'_blank');
+  let msg = `Olá! Esqueci minha senha do My Shopping Cart.\n\nUsuário: ${found.user}\n\nEstou enviando em anexo o PDF com a senha. Senha de bloqueio do PDF: ${PDF_BLOCK_PASS}`;
+  window.open(`https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(msg)}`,'_blank');
   $('forgotModal').classList.remove('open');
 };
+// CÔMODO
+$('addRoomBtn').onclick=()=>{
+  let n=$('roomName').value.trim();
+  if(!n) return;
+  if(rooms.includes(n)){ alert('Cômodo já existe'); return; }
+  rooms.push(n); saveData(); refreshRooms(); $('itemCat').value=n; $('roomName').value=''; $('roomName').focus(); render();
+};
+$('roomName').addEventListener('keydown',e=>{if(e.key==='Enter')$('addRoomBtn').click();});
 function render(){
-  let list=items;
-  if(filter!=='all'){
-    if(filter==='falta') list=items.filter(i=>!i.done);
-    else if(filter==='ok') list=items.filter(i=>i.done);
-    else list=items.filter(i=>i.cat===filter);
-  }
+  let list = filter==='falta' ? items.filter(i=>!i.done) : items.filter(i=>i.done);
   let main=$('main'); main.innerHTML='';
-  if(!items.length){main.innerHTML='<div style="text-align:center;color:#94a3b8;padding:18px">Nenhum item ainda.</div>';}
-  else if(!list.length){main.innerHTML='<div style="text-align:center;color:#94a3b8;padding:18px">Nada aqui.</div>';}
-  cats.forEach(cat=>{
+  if(!items.length){ main.innerHTML='<div style="text-align:center;color:#94a3b8;padding:18px">Nenhum item ainda.<br>Adicione um cômodo e depois um item.</div>'; }
+  else if(!list.length){ main.innerHTML=`<div style="text-align:center;color:#94a3b8;padding:18px">${filter==='falta' ? 'Nada faltando! Tudo no carrinho ✅' : 'Carrinho vazio. Marque os itens que já pegou.'}</div>`; }
+  rooms.forEach(cat=>{
     let arr=list.filter(i=>i.cat===cat); if(!arr.length) return;
-    let done=arr.filter(i=>i.done).length;
+    let totalCat = items.filter(i=>i.cat===cat).length;
+    let doneCat = items.filter(i=>i.cat===cat && i.done).length;
     let div=document.createElement('div'); div.className='cat';
-    div.innerHTML=`<div class="cat-head"><b>${cat}</b><span>${done}/${arr.length} no carrinho</span></div><div class="list"></div>`;
+    div.innerHTML=`<div class="cat-head"><b>${cat}</b><span>${doneCat}/${totalCat} no carrinho <button data-del-room="${cat}" style="border:0;background:none;color:#cbd5e1;cursor:pointer">✕</button></span></div><div class="list"></div>`;
+    div.querySelector('[data-del-room]').onclick=()=>{ if(confirm('Excluir cômodo '+cat+' e todos os itens dele?')){ rooms=rooms.filter(r=>r!==cat); items=items.filter(i=>i.cat!==cat); saveData(); refreshRooms(); render(); } };
     let l=div.querySelector('.list');
     arr.forEach(it=>{
       let row=document.createElement('div'); row.className='item'+(it.done?' checked':'');
       row.innerHTML=`<input type="checkbox" class="check" ${it.done?'checked':''}><span class="name">${it.name}</span><span class="qty">x${it.qty}</span><button class="del">✕</button>`;
-      row.querySelector('.check').onclick=()=>{it.done=!it.done;saveItems();render();};
-      row.querySelector('.name').onclick=()=>{it.done=!it.done;saveItems();render();};
-      row.querySelector('.del').onclick=()=>{items=items.filter(x=>x.id!==it.id);saveItems();render();};
+      row.querySelector('.check').onclick=()=>{it.done=!it.done;saveData();render();};
+      row.querySelector('.name').onclick=()=>{it.done=!it.done;saveData();render();};
+      row.querySelector('.del').onclick=()=>{items=items.filter(x=>x.id!==it.id);saveData();render();};
       l.appendChild(row);
     });
     main.appendChild(div);
@@ -224,17 +216,18 @@ function render(){
   $('headerCount').textContent=`${done} / ${total}`;
   $('fill').style.width= total? (done/total*100)+'%':'0%';
 }
-function add(){
+function addItem(){
   let name=$('itemName').value.trim(); if(!name) return;
+  if(!rooms.length){ alert('Adicione um cômodo primeiro'); return; }
   items.push({id:Date.now(),name, qty:+$('itemQty').value||1, cat:$('itemCat').value, done:false});
-  saveItems(); $('itemName').value=''; $('itemName').focus(); render();
+  saveData(); $('itemName').value=''; $('itemName').focus(); render();
 }
-$('addBtn').onclick=add;
-$('itemName').addEventListener('keydown',e=>{if(e.key==='Enter')add();});
+$('addBtn').onclick=addItem;
+$('itemName').addEventListener('keydown',e=>{if(e.key==='Enter')addItem();});
 document.querySelectorAll('.btn-cat').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.btn-cat').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render();}});
-$('clearChecked').onclick=()=>{ if(confirm('Limpar só os conferidos?')){items=items.filter(i=>!i.done);saveItems();render();}};
+$('clearChecked').onclick=()=>{ if(confirm('Limpar só os conferidos?')){items=items.filter(i=>!i.done);saveData();render();}};
 let sess=getSession();
-if(sess && getUsers().find(u=>u.user===sess)){ currentUser=sess; items=loadItems(); showApp(); } else { showLogin(); }
+if(sess && getUsers().find(u=>u.user===sess)){ currentUser=sess; showApp(); } else { showLogin(); }
 </script>
 </body>
 </html>
