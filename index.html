@@ -647,6 +647,197 @@
       color: var(--accent);
       font-weight: 700;
     }
+
+    /* Refinamento visual */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #173b78;
+      --primary-light: #eaf2ff;
+      --accent: #7dd3fc;
+      --bg: #eef3f9;
+      --card: #ffffff;
+      --text: #17243a;
+      --muted: #718096;
+      --border: #d8e1ed;
+      --danger: #dc4545;
+    }
+    body {
+      background:
+        radial-gradient(circle at 12% 0%, rgba(37,99,235,.09), transparent 28rem),
+        var(--bg);
+      line-height: 1.45;
+    }
+    .auth-card, .modal-box {
+      border: 1px solid rgba(203,213,225,.75);
+      border-radius: 18px;
+      box-shadow: 0 16px 42px rgba(23,45,78,.13);
+    }
+    .auth-header h1 { letter-spacing: -.4px; }
+    input[type="text"], input[type="password"] {
+      border-radius: 10px;
+      border-color: #d5deea;
+      background: #f9fbfe;
+      transition: border-color .18s, box-shadow .18s, background .18s;
+    }
+    input:focus {
+      box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+    }
+    .btn, .btn-top, .btn-save-list, .btn-new-blank, .btn-add-room,
+    .btn-add-item, .btn-load-list, .btn-delete-saved, .btn-edit-room,
+    .btn-edit-item, .btn-edit-saved {
+      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+    }
+    button { cursor: pointer; }
+    button:active { transform: translateY(1px); }
+    .topbar {
+      height: 54px;
+      padding: 0 16px;
+      background: linear-gradient(115deg, #173b78, #2458a5);
+      box-shadow: 0 5px 18px rgba(20,49,91,.2);
+    }
+    .app-screen { padding-top: 58px; padding-bottom: 58px; }
+    .topbar-title { font-size: 15px; letter-spacing: -.2px; }
+    .btn-top { border-radius: 9px; padding: 6px 12px; }
+    .btn-top-accent { background: rgba(255,255,255,.22); }
+    .container { padding: 12px; }
+    .add-room-bar {
+      padding: 9px;
+      gap: 8px;
+      border: 1px solid #e1e8f1;
+      border-radius: 14px;
+      box-shadow: 0 5px 16px rgba(31,55,86,.06);
+    }
+    .add-room-bar input { border-radius: 9px; }
+    .btn-add-room { border-radius: 9px; box-shadow: 0 3px 8px rgba(37,99,235,.2); }
+    .room-card {
+      border: 1px solid #e0e7f0;
+      border-left: 4px solid var(--primary);
+      border-radius: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 5px 16px rgba(31,55,86,.065);
+      transition: box-shadow .18s, transform .18s;
+    }
+    .room-card:hover { box-shadow: 0 8px 22px rgba(31,55,86,.10); }
+    .room-header {
+      min-height: 48px;
+      padding: 9px 12px;
+      background: linear-gradient(100deg, #f8fbff, #f1f6fd);
+      border-bottom-color: #e7edf5;
+    }
+    .room-title { font-size: 14px; letter-spacing: .05px; }
+    .room-chevron { font-size: 10px; }
+    .room-count {
+      background: #e4efff;
+      color: #1e4d91;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+    }
+    .room-meta { gap: 7px; }
+    .btn-del-room {
+      color: #a0aabd;
+      font-size: 11px;
+      border-radius: 7px;
+      padding: 4px 6px;
+    }
+    .btn-del-room:hover { color: var(--danger); background: #fff0f0; }
+    .add-item-bar {
+      padding: 9px;
+      gap: 6px;
+      background: #fff;
+      border-bottom: 1px solid #edf1f6;
+    }
+    .add-item-bar input.item-name, .add-item-bar input.item-qty {
+      height: 34px;
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+    .btn-add-item {
+      height: 34px;
+      width: 36px;
+      border-radius: 9px;
+      box-shadow: 0 3px 8px rgba(37,99,235,.2);
+    }
+    .item-row {
+      min-height: 40px;
+      padding: 6px 10px;
+      border-bottom-color: #edf1f6;
+    }
+    .item-row:nth-child(even) { background: #fcfdff; }
+    .item-left { gap: 9px; }
+    .item-check { width: 18px; height: 18px; }
+    .item-text { font-size: 13.5px; }
+    .item-qty-badge {
+      background: #edf4ff;
+      color: #24539a;
+      border-radius: 6px;
+      padding: 2px 7px;
+    }
+    .bottom-footer {
+      height: 46px;
+      padding: 0 16px;
+      background: linear-gradient(115deg, #173b78, #2458a5);
+      box-shadow: 0 -5px 18px rgba(20,49,91,.16);
+      font-size: 12.5px;
+    }
+    .saved-list-item {
+      padding: 10px;
+      border-radius: 11px;
+      border-color: #e1e8f1;
+      background: #fbfcff;
+      gap: 8px;
+    }
+    .saved-list-name { font-size: 13.5px; }
+    .saved-list-btns { gap: 5px; }
+    .btn-load-list, .btn-delete-saved, .btn-edit-saved {
+      border-radius: 7px;
+      padding: 6px 9px;
+      font-size: 11.5px;
+    }
+    .btn-load-list { box-shadow: 0 2px 6px rgba(37,99,235,.16); }
+    .btn-delete-saved { background: #fff0f0; }
+    .btn-edit-saved, .btn-edit-room, .btn-edit-item {
+      border: 0;
+      color: #3564a5;
+      background: #eaf2ff;
+      font-weight: 700;
+    }
+    .btn-edit-room {
+      padding: 4px 7px;
+      border-radius: 7px;
+      font-size: 11px;
+    }
+    .btn-edit-item {
+      padding: 4px 7px;
+      border-radius: 7px;
+      font-size: 11px;
+      margin-left: 5px;
+      flex-shrink: 0;
+    }
+    .btn-edit-room:hover, .btn-edit-item:hover, .btn-edit-saved:hover {
+      background: #dbeafe;
+    }
+    .btn-del-item {
+      border-radius: 6px;
+      padding: 2px 6px;
+      margin-left: 3px;
+    }
+    .empty-state {
+      background: rgba(255,255,255,.72);
+      border: 1px dashed #cbd7e6;
+      border-radius: 12px;
+      margin-top: 8px;
+    }
+    @media (max-width: 390px) {
+      .topbar { padding: 0 10px; }
+      .btn-top { padding: 5px 8px; font-size: 11px; }
+      .room-header { padding: 8px; }
+      .room-meta { gap: 4px; }
+      .btn-edit-room { padding: 4px 5px; }
+      .saved-list-item { align-items: flex-start; }
+      .saved-list-btns { flex-wrap: wrap; justify-content: flex-end; }
+    }
+
   </style>
 </head>
 <body>
@@ -1282,6 +1473,7 @@
             '</div>' +
             '<div class="saved-list-btns">' +
               '<button type="button" class="btn-load-list">Abrir</button>' +
+              '<button type="button" class="btn-edit-saved" title="Editar nome da lista">Editar</button>' +
               '<button type="button" class="btn-delete-saved" title="Excluir lista">&times;</button>' +
             '</div>';
 
@@ -1291,6 +1483,23 @@
             setActiveListName(list.name);
             renderRooms();
             listsModal.classList.add('hidden');
+          });
+
+          div.querySelector('.btn-edit-saved').addEventListener('click', function() {
+            var newName = prompt('Editar título da lista:', list.name);
+            if (newName === null) return;
+            newName = newName.trim();
+            if (!newName) { alert('O título não pode ficar vazio.'); return; }
+            var duplicate = savedLists.some(function(other) {
+              return other.id !== list.id && other.name.toLowerCase() === newName.toLowerCase();
+            });
+            if (duplicate) { alert('Já existe uma lista com esse nome.'); return; }
+            var oldName = list.name;
+            list.name = newName;
+            list.updatedAt = new Date().toLocaleDateString('pt-BR');
+            if (activeListName.toLowerCase() === oldName.toLowerCase()) setActiveListName(newName);
+            persistSavedLists();
+            renderSavedLists();
           });
 
           div.querySelector('.btn-delete-saved').addEventListener('click', function() {
@@ -1378,12 +1587,24 @@
             '</div>' +
             '<div class="room-meta">' +
               '<span class="room-count">' + formatNumber(roomCheckedUnits) + '/' + formatNumber(roomTotalUnits) + '</span>' +
+              '<button type="button" class="btn-edit-room" title="Editar título do cômodo">Editar</button>' +
               '<button type="button" class="btn-del-room" title="Excluir cômodo">Excluir</button>' +
             '</div>';
 
           header.addEventListener('click', function(e) {
-            if (e.target.closest('.btn-del-room')) return;
+            if (e.target.closest('.btn-del-room') || e.target.closest('.btn-edit-room')) return;
             room.collapsed = !room.collapsed;
+            saveData();
+            renderRooms();
+          });
+
+          header.querySelector('.btn-edit-room').addEventListener('click', function(e) {
+            e.stopPropagation();
+            var newName = prompt('Editar título da lista/cômodo:', room.name);
+            if (newName === null) return;
+            newName = newName.trim();
+            if (!newName) { alert('O título não pode ficar vazio.'); return; }
+            room.name = newName;
             saveData();
             renderRooms();
           });
@@ -1454,10 +1675,27 @@
                 '<span class="item-text">' + escapeHtml(item.name) + '</span>' +
                 '<span class="item-qty-badge">' + escapeHtml(item.qty) + '</span>' +
               '</label>' +
+              '<button type="button" class="btn-edit-item" title="Editar item">Editar</button>' +
               '<button type="button" class="btn-del-item" title="Remover item">&times;</button>';
 
             li.querySelector('.item-check').addEventListener('change', function(e) {
               item.checked = e.target.checked;
+              saveData();
+              renderRooms();
+            });
+
+            li.querySelector('.btn-edit-item').addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              var newName = prompt('Editar nome do item:', item.name);
+              if (newName === null) return;
+              newName = newName.trim();
+              if (!newName) { alert('O nome do item não pode ficar vazio.'); return; }
+              var newQty = prompt('Editar quantidade:', item.qty || '1');
+              if (newQty === null) return;
+              newQty = newQty.trim() || '1';
+              item.name = newName;
+              item.qty = newQty;
               saveData();
               renderRooms();
             });
